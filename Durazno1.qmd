@@ -1,9 +1,8 @@
 ---
 title: "Durazno1"
 ---
-```
 
-## I. Introducción
+## I. Introducción {#I. Introducción}
 
 El etiquetado de imágenes es una tarea fundamental en proyectos de análisis de datos y aprendizaje automático, ya que permite clasificar y anotar datos visuales para entrenar modelos de inteligencia artificial. En este proyecto, se realizó el etiquetado de 50 imágenes que incluyen hojas y monedas utilizando Label Studio, una herramienta de código abierto diseñada para la anotación de datos.
 
@@ -11,7 +10,7 @@ El objetivo principal fue preparar un dataset de imágenes etiquetadas que pueda
 
 En esta página se describe paso a paso el proceso seguido, desde la instalación de los programas necesarios hasta la finalización del etiquetado. Además, se presentan algunos ejemplos de las imágenes etiquetadas, destacando la utilidad de este procedimiento en contextos académicos y tecnológicos.
 
-## II. Instalación de Anaconda
+## II. Instalación de Anaconda {#II. Instalación de Anaconda}
 
 **¿Que es Anaconda?**
 
@@ -49,7 +48,7 @@ En este punto se necesita 2 comandos para ejecutar, por lo cual iremos al siguie
 
 ![](images/clipboard-232235857.png)
 
-## III. Label Studio
+## III. Label Studio {#III. Label Studio}
 
 **¿Que es?**
 
@@ -89,7 +88,7 @@ Seleccionamos la opción y nos mostrará lo siguiente.
 
 En esta parte solo agregamos los nombres de la etiqueta: Hoja y Moneda y das add; se selecciona el color que mas deseemos al presionar en la etiqueta, obviamente se borra las etiquetas que nos muestran como ejemplo. Luego de eso seleccionamos los cuadrados sin marcar en configurar ajustes y damos ahorrar o save si esta en ingles su pagina.
 
-## IV. Ejecución para el etiquetado
+## IV. Ejecución para el etiquetado {#IV. Ejecución para el etiquetado}
 
 Continuando con lo ya mencionado, las imagenes que cargaste te aparecerán de la siguiente manera en tu proyecto.
 
@@ -139,7 +138,7 @@ Damos en entragar y ya estaria, este proceso se realiza en todas las imagenes qu
 
 Los datos exportados suelen servir para entrenar algoritmos de aprendizaje, entre otras cosas.
 
-## V. Resultados
+## V. Resultados {#V. Resultados}
 
 El grupo estuvo conformado por 6 personas, en la cual se etiqueto 50 imagenes en total.
 
@@ -175,7 +174,7 @@ A continuacion presento evidencia de sus partes realizadas:
 
 ![](images/clipboard-522333895.png)
 
-## VI. Conclusión
+## VI. Conclusión {#VI. Conclusión}
 
 El proceso de etiquetado de imágenes utilizando herramientas como Label Studio, en combinación con plataformas de gestión de entornos como Anaconda, demuestra la importancia de contar con un flujo de trabajo organizado y eficiente. La creación de un dataset de 50 imágenes etiquetadas con hojas y monedas no solo permitió explorar las capacidades de estas herramientas, sino que también sentó las bases para futuros proyectos en análisis de imágenes y aprendizaje automático.
 
