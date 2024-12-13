@@ -1,0 +1,16 @@
+"0","library(multcompView)
+"
+"2","Avisos:
+"
+"2","1: "
+"2","In class(object) <- ""environment"" :"
+"2","
+ "
+"2"," Configuración de clase(x) a ""environment"" establece atribuibles a NULL; resultado ya no será un objeto S4
+"
+"2","2: "
+"2","In class(object) <- ""environment"" :"
+"2","
+ "
+"2"," Configuración de clase(x) a ""environment"" establece atribuibles a NULL; resultado ya no será un objeto S4
+"

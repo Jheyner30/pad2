@@ -1,0 +1,20 @@
+"0","library(tidyverse)"
+"0","library(psych)"
+"0",""
+"0","fb %>%"
+"0","  select_if(is.numeric) %>% "
+"0","  dplyr::select(!c(""block"")) %>%"
+"0","                   pairs.panels(x = ."
+"0","             , hist.col=""red"""
+"0","             , pch = 21"
+"0","             , stars = TRUE"
+"0","             , scale = FALSE"
+"0","             , lm = TRUE"
+"0","             )"
+"1","[1m[33mError[39m in `dplyr::select()`:[22m
+[33m![39m Can't select columns that don't exist.
+[31m✖[39m Column `block` doesn't exist.
+Backtrace:
+[90m 1. [39m... %>% ...
+[90m 5. [39m[1m[94mdplyr:::select.data.frame([39m[22m., !c(""block"")[1m[94m)[39m[22m
+"

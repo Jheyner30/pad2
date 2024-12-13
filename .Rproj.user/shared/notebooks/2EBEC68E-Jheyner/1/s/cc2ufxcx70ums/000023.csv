@@ -1,0 +1,11 @@
+"0","library(inti)"
+"0",""
+"0","model <- remove_outliers(data = data_de_tesis_prof"
+"0","                         , formula = lfa ~ riego + geno + riego*geno + (1|bloque)"
+"0","                         , plot_diag = T"
+"0","                )"
+"0","model"
+"1","$data
+"
+"1","$data$raw
+"

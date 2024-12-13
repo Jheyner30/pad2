@@ -1,0 +1,496 @@
+---
+title: "Untitled"
+author: "Jheyner Villegas Mas"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+---
+title: "como usar quarto"
+author: "Jheyner Villegas Mas"
+format:
+  html:
+    toc: true
+    toc-location: left
+    number-sections: true
+    embed-resources: true
+    output-file: index
+---
+
+quarto::quarto_render("mi_documento.qmd")\
+\
+
+```{r}
+# Mi primera pagina web
+
+source('https://inkaverse.com/setup.r')
+
+
+# Modelo lineal
+
+# Importar data xlsx
+
+# Leer el archivo de Excel y asignarlo a una variable
+```
+
+```{r}
+library(openxlsx)
+```
+
+```{r}
+data_de_tesis_prof <- openxlsx::read.xlsx("LA MOLINA 2014 POTATO WUE (FB).xlsx", sheet = "fb")
+
+```
+
+```{r}
+# Modelo lineal
+
+modelo <- lm(formula = lfa ~ bloque + geno + riego + riego*geno, data = data_de_tesis_prof)
+
+anova(modelo)
+plot(modelo)
+
+# Grafico en boxplot
+```
+
+```{r}
+#cargamos el paquete ggplot2
+library(ggplot2)
+
+# Crear un boxplot para visualizar los efectos de geno y riego
+ggplot(data_de_tesis_prof, aes(x = factor(geno), y = lfa, fill = factor(riego))) +
+  geom_boxplot() +
+  labs(x = "Genotipo", y = "LFA (Respuesta)", fill = "Riego") +
+  theme_minimal() +
+  ggtitle("Boxplot de LFA por Genotipo y Tratamiento de Riego")
+```
+
+```{r}
+modelo <- aov(formula = block + hi ~ riego + geno + riego*geno
+          , data = data_de_tesis_prof)
+anova(modelo)
+
+plot(modelo)
+
+```
+
+```{r}
+ol <- boxplot(lfa ~ riego*geno,data_de_tesis_prof)
+ol
+```
+
+# Imprimir resultados
+print(tukey_result_geno)
+
+```{r}
+library(inti)
+
+model <- remove_outliers(data = data_de_tesis_prof
+                         , formula = lfa ~ riego + geno + riego*geno + (1|bloque)
+                         , plot_diag = T
+                )
+model
+```
+```{r}
+# Crear el modelo lineal
+modelo <- lm(formula = lfa ~ bloque + geno + riego + riego*geno, data = data_de_tesis_prof)
+
+anova(modelo)
+plot(modelo)
+```
+
+
+```{r}
+# Cargar la librería 'agricolae' para la prueba de Tukey
+library(agricolae)
+```
+
+
+```{r}
+# Realizar la prueba de Tukey
+tukey_result <- HSD.test(modelo, c("geno", "riego"), group = TRUE)
+```
+
+
+```{r}
+# Mostrar los resultados de Tukey
+print(tukey_result)
+
+# Graficar los resultados de Tukey
+plot(tukey_result)
+
+```
+```{r}
+fb <- data.frame(
+  column1 = c(1, 2, 3),
+  column2 = c("a", "b", "c")
+)
+
+```
+
+```{r}
+# Load necessary libraries
+library(agricolae)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+# Check if fb exists
+if (!exists("fb")) {
+  stop("The data frame 'fb' is not defined.")
+}
+
+
+# Perform Tukey's HSD test
+tukey_result <- HSD.test(modelo, c("geno", "riego"), group = TRUE)
+
+
+# Prepare data for plotting
+grupos <- tukey_result$groups %>% 
+  rownames_to_column("tratamientos") %>% 
+  separate(tratamientos, into = c("geno", "riego"), sep = ":")
+
+# Create the plot
+ggplot(grupos, aes(x = geno, y = lfa, fill = riego)) + 
+  geom_bar(stat = "identity", position = position_dodge(), color = "black") +
+  labs(title = "Comparación de Medias - Prueba de Tukey", 
+       x = "Genotipos", 
+       y = "LFA") +
+  theme_minimal() +
+  theme(legend.title = element_blank()) +
+  scale_fill_discrete(name = "Riego")
+
+```
+
+```{r}
+#interraccion 
+
+library(agricolae)
+
+# Test de Tukey para el factor "riego"
+tukey_riego <- HSD.test(modelo, "riego", group = TRUE)
+print(tukey_riego)
+```
+
+```{r}
+# Cargar las librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Crear un dataframe con los datos proporcionados
+datos <- data.frame(
+  riego = c("irrigado", "sequia"),
+  lfa = c(3.523203, 3.466221),
+  groups = c("a", "a")  # Las letras estadísticas que has proporcionado
+)
+
+# Crear el gráfico de barras con letras estadísticas
+ggplot(datos, aes(x = riego, y = lfa, fill = riego)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  labs(title = "Comparación de Medias - Prueba de Tukey", 
+       x = "Riego", 
+       y = "LFA") +
+  theme_minimal() +
+  theme(legend.title = element_blank()) +
+  scale_fill_manual(values = c("irrigado" = "skyblue", "sequia" = "orange")) +
+  geom_text(aes(label = groups, y = lfa + 0.05),  # Posiciona las letras estadísticas
+            position = position_dodge(0.9), vjust = 0)  # Ajuste del espaciado
+
+```
+
+```{r}
+# Test de Tukey para el factor "geno"
+tukey_geno <- HSD.test(modelo, "geno", group = TRUE)
+print(tukey_geno)
+```
+
+```{r}
+# Cargar la librería ggplot2
+library(ggplot2)
+
+# Crear un data frame con los resultados de Tukey
+tukey_df <- data.frame(
+  geno = c("irrigado:G01", "irrigado:G02", "irrigado:G03", "irrigado:G04", "irrigado:G05", 
+           "irrigado:G06", "irrigado:G07", "irrigado:G08", "irrigado:G09", "irrigado:G10", 
+           "irrigado:G11", "irrigado:G12", "irrigado:G13", "irrigado:G14", "irrigado:G15",
+           "sequia:G01", "sequia:G02", "sequia:G03", "sequia:G04", "sequia:G05", 
+           "sequia:G06", "sequia:G07", "sequia:G08", "sequia:G09", "sequia:G10", 
+           "sequia:G11", "sequia:G12", "sequia:G13", "sequia:G14", "sequia:G15"),
+  lfa = c(3.472384, 3.455082, 3.625062, 3.545896, 3.580478, 3.220892, 3.749364, 3.429036, 
+          3.604533, 3.554818, 3.645409, 3.498279, 3.350110, 3.436284, 3.680409, 3.440771, 
+          3.402255, 3.592667, 3.485744, 3.446316, 3.136288, 3.689064, 3.315331, 3.511135, 
+          3.581705, 3.665248, 3.402240, 3.345985, 3.389015, 3.350110),
+  groups = c("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", 
+             "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a")
+)
+
+# Crear el gráfico con ggplot2
+ggplot(tukey_df, aes(x = reorder(geno, lfa), y = lfa, fill = groups)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  geom_text(aes(label = groups, y = lfa + 0.05), position = position_dodge(0.9), vjust = 0) +
+  labs(title = "Comparación de Genotipos - Test de Tukey", 
+       x = "Genotipos", y = "LFA (Media)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))  # Girar las etiquetas para mejor legibilidad
+
+```
+
+```{r}
+# Test de Tukey para la interacción "riego:geno"
+tukey_interaccion <- HSD.test(modelo, c("riego", "geno"), group = TRUE)
+print(tukey_interaccion)
+```
+
+```{r}
+# Cargar librerías necesarias
+library(ggplot2)
+
+# Extraer los resultados de los grupos
+tukey_groups <- tukey_interaccion$groups
+
+# Convertir el resultado en un data.frame para facilitar la gráfica
+df <- data.frame(
+  Combinacion = rownames(tukey_groups),
+  Media = tukey_interaccion$means$lfa,
+  Grupo = tukey_groups$groups
+)
+
+# Crear el gráfico
+ggplot(df, aes(x = reorder(Combinacion, Media), y = Media, fill = Grupo)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_text(aes(label = Grupo), vjust = -0.5, size = 3.5) +
+  labs(x = "Combinación de Riego y Genotipo", y = "Promedio de LFA", title = "Resultados del Test de Tukey: Interacción Riego:Genotipo") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  theme_minimal()
+
+```
+
+```{r}
+# Ver la estructura de tukey_interaccion
+str(tukey_interaccion)
+```
+
+```{r}
+# Cargar librerías necesarias
+library(ggplot2)
+
+# Extraer los resultados de los grupos de Tukey
+tukey_groups <- tukey_interaccion$groups
+
+# Crear un data frame con las combinaciones de riego y genotipo, las medias y los grupos
+df <- data.frame(
+  Combinacion = rownames(tukey_groups),
+  Media = tukey_groups$lfa,
+  Grupo = tukey_groups$groups
+)
+
+# Crear el gráfico con ggplot
+ggplot(df, aes(x = reorder(Combinacion, Media), y = Media, fill = Grupo)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  geom_text(aes(label = Grupo), vjust = -0.5, size = 3.5) +
+  labs(x = "Combinación de Riego y Genotipo", y = "Promedio de LFA", title = "Resultados del Test de Tukey: Interacción Riego:Genotipo") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+```
+
+```{r}
+# Convertir las filas en columnas y separar los factores
+mc <- tukey_interaccion$groups %>%
+  rownames_to_column("trat") %>%
+  separate(trat, c("riego", "variedad"))
+# Ver la estructura del nuevo data frame mc
+str(mc)
+```
+
+```{r}
+# Gráfico en ggplot
+
+ggplot(mc, aes(x = variedad, y = lfa, fill = riego)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_text(aes(label = groups), position = position_dodge(width = 1), vjust = -0.1) +
+  labs(title = "Producción por variedad y Riego",
+       x = "Variedad",
+       y = "LFA") +
+  theme_minimal()
+```
+
+```{r}
+library(tidyverse)
+library(psych)
+
+```
+
+```{r}
+#Comparación de medias: emmeans
+library(emmeans)
+mc <- emmeans(modelo, ~ riego * geno)
+mc <- emmeans(modelo, ~ riego | geno)
+
+mc <- emmeans(modelo, ~ riego | geno) %>%
+  as.data.frame()
+
+mc
+
+library(emmeans)
+library(multcomp)
+library(multcompView)
+library(lme4)
+library(lmerTest)
+```
+
+```{r}
+# Calcular las medias marginales estimadas por el modelo
+cm1 <- emmeans(modelo, ~ geno | riego)
+# Aplicar la función cld al objeto 'cm1'
+resultado_cld <- cld(cm1, Letters = letters, reversed = TRUE)
+# Imprimir el resultado
+print(resultado_cld)
+```
+```{r}
+library(ggplot2)
+library(emmeans)
+
+# Crear un gráfico de barras con medias y barras de error
+ggplot(resultado_cld, aes(x = geno, y = emmean, fill = .group)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +  # Barras
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +  # Barras de error
+  facet_wrap(~ riego, scales = "free_y") +  # Facetas por tipo de riego
+  labs(title = "Medias marginales estimadas por genotipo",
+       x = "Genotipo",
+       y = "Media estimada (emmean)",
+       fill = "Grupo") +  # Título y etiquetas
+  theme_minimal() +  # Tema limpio
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  # Rotar etiquetas del eje X
+  scale_fill_manual(values = c("a" = "blue", "b" = "red", "c" = "green", 
+                               "d" = "orange", "e" = "purple", "f" = "pink", 
+                               "g" = "yellow", "h" = "brown"))  # Colores para grupos
+
+```
+
+
+```{r}
+# Calcular las medias marginales estimadas por el modelo
+cm2 <- emmeans(modelo, ~ riego | geno) 
+
+# Aplicar la función cld al objeto 'cm1'
+ resultado_cld_cm2 <- cld(cm2, Letters = letters, reversed = TRUE)
+ 
+# Imprimir el resultado
+print(resultado_cld_cm2)
+```
+```{r}
+library(ggplot2)
+library(emmeans)
+
+# Crear un gráfico de barras con medias y barras de error
+ggplot(resultado_cld_cm2, aes(x = geno, y = emmean, fill = riego)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +  # Barras
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +  # Barras de error
+  labs(title = "Medias marginales estimadas por genotipo y tipo de riego",
+       x = "Genotipo",
+       y = "Media estimada (emmean)",
+       fill = "Riego") +  # Título y etiquetas
+  theme_minimal() +  # Tema limpio
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  # Rotar etiquetas del eje X
+  scale_fill_manual(values = c("irrigado" = "blue", "sequia" = "red"))  # Colores para riego
+
+```
+
+
+```{r}
+# Calcular las medias marginales estimadas por el modelo para 'riego * geno'
+cm3 <- emmeans(modelo, ~ riego * geno)
+
+# Aplicar la función cld al objeto 'cm3'
+resultado_cld_cm3 <- cld(cm3, Letters = letters, reversed = TRUE)
+
+# Imprimir el resultado
+print(resultado_cld_cm3)
+
+
+```
+
+```{r}
+library(ggplot2)
+library(emmeans)
+
+# Suponiendo que 'resultado_cld_cm3' es el objeto con los resultados
+
+# Crear gráfico de barras para medias marginales estimadas
+ggplot(resultado_cld_cm3, aes(x = geno, y = emmean, fill = riego)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +  # Barras
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +  # Barras de error
+  labs(title = "Medias marginales estimadas por genotipo y tipo de riego",
+       x = "Genotipo",
+       y = "Media estimada (emmean)",
+       fill = "Tipo de riego") +  # Título y etiquetas
+  theme_minimal() +  # Tema limpio
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  # Rotar etiquetas del eje X
+  scale_fill_manual(values = c("irrigado" = "blue", "sequia" = "red"))  # Colores para riego
+```
+```{r}
+# Analisis multivariado
+str (data_de_tesis_prof)
+```
+```
+
+```{r}
+# Correlacion
+library(tidyverse)
+library(psych)
+
+data_de_tesis_prof %>% 
+  select_if(is.numeric) %>% 
+  dplyr::select(!c("block")) %>% 
+  pairs.panels(x = .
+               , hist.col = "red"
+               , pch = 21
+               , stars = TRUE
+               , scale = FALSE
+           ,lm=TRUE)
+```
+
+```{r}
+#Analisis de componentes principales
+library(FactoMineR)
+mv <- data_de_tesis_prof %>% 
+  group_by(riego, geno) %>% 
+  summarise(across(where(is.numeric), ~ mean(., na.rm = TRUE))) %>% 
+  PCA(scale.unit = T, quali.sup = c(1:4), graph = F)
+
+p1 <- plot(mv
+     , choix="ind"
+     , habillage=1)
+p2 <- plot(mv
+     , choix="var")
+
+list(p1, p2) %>% 
+  plot_grid(plotlist=.,nrow=1)
+```
+```
+
+```
+

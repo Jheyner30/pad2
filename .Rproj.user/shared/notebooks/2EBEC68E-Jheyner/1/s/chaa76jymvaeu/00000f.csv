@@ -1,0 +1,16 @@
+"0","library(FactoMineR)"
+"0","mv <- fb %>%"
+"0","  group_by(riego, geno) %>%"
+"0","  summarise(across(where(is.numeric), ~ mean(., na.rm =TRUE))) %>%"
+"0","  PCA(scale.unit = T, quali.sup = c(1:4), graph = F)"
+"1","[38;5;232m`summarise()` has grouped output by 'riego'. You can override using the `.groups`
+argument.[39m
+"
+"0","p1 <- plot(mv"
+"0","     , choix=""ind"""
+"0","     , habillage=1)"
+"0",""
+"0","p2 <- plot(mv"
+"0","     , choix=""var"")"
+"0","list(p1, p2) %>%"
+"0","  plot_grid(plotlist = .,nrow = 1)"

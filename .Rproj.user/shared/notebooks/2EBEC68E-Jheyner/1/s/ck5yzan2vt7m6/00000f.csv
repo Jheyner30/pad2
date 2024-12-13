@@ -1,0 +1,2 @@
+"0","# Graficar las comparaciones de medias para el factor ""geno"""
+"0","plot(tukey_result_geno, main = ""Comparación de Medias para Genotipo"", ylab = ""Media de LFA"", xlab = ""Genotipo"")"

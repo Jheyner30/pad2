@@ -1,0 +1,2 @@
+"0","# Realizar la prueba de Tukey"
+"0","tukey_result <- HSD.test(modelo, c(""geno"", ""riego""), group = TRUE)"

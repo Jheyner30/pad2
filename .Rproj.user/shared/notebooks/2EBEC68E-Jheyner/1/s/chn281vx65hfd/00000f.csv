@@ -1,0 +1,12 @@
+"0","# Mi primera pagina web"
+"0",""
+"0","source('https://inkaverse.com/setup.r')"
+"1","[36mℹ[39m The [34mgooglesheets4[39m package is using a cached token for ]8;;mailto:7365864321@untrm.edu.pe[34m7365864321@untrm.edu.pe[39m]8;;.
+"
+"1","[36mℹ[39m The [34mgoogledrive[39m package is using a cached token for ]8;;mailto:7365864321@untrm.edu.pe[34m7365864321@untrm.edu.pe[39m]8;;.
+"
+"0","# Modelo lineal"
+"0",""
+"0","# Importar data xlsx"
+"0",""
+"0","# Leer el archivo de Excel y asignarlo a una variable"
