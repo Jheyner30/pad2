@@ -1,0 +1,13 @@
+/* style.css */
+
+body {
+    text-align: center;
+}
+
+h1, h2, h3 {
+    margin: 20px 0;
+}
+
+p {
+    margin: 15px 0;
+}
